@@ -1,90 +1,88 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-<meta charset="UTF-8">
-<title>مسابقة رمضان</title>
-<style>
-    body {
-        font-family: 'Cairo', sans-serif;
-        margin: 0;
-        padding: 0;
-        background-image: url('background.jpg'); /* صورة الخلفية */
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        color: #fff;
-    }
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px;
-        background: rgba(0,0,0,0.5);
-    }
-    .header img {
-        height: 80px;
-    }
-    table {
-        width: 90%;
-        margin: 40px auto;
-        border-collapse: collapse;
-        background: rgba(0,0,0,0.6);
-        color: #fff;
-    }
-    th, td {
-        padding: 12px;
-        border: 1px solid #fff;
-        text-align: center;
-    }
-    th {
-        background: rgba(255,255,255,0.2);
-    }
-</style>
+    <meta charset="UTF-8">
+    <title>Ramadan Challenge Participants</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('background.jpg'); /* ضع هنا رابط الصورة الخلفية */
+            background-size: cover; /* تكبير الصورة لتملأ الشاشة */
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #fff;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .header img {
+            height: 80px;
+            margin: 0 10px;
+        }
+
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: rgba(0,0,0,0.3); /* شفافية خفيفة عشان تظهر الخلفية */
+            color: #fff;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #fff;
+            text-align: center;
+        }
+
+        th {
+            background: rgba(0,0,0,0.5);
+        }
+
+        tr:nth-child(even) {
+            background: rgba(0,0,0,0.2);
+        }
+    </style>
 </head>
 <body>
+    <div class="header">
+        <img src="team_logo.png" alt="Team Logo"> <!-- ضع هنا رابط اللوجو -->
+        <img src="moon.png" alt="Moon"> <!-- ضع هنا رابط القمر -->
+    </div>
 
-<div class="header">
-    <img src="team_logo.png" alt="Team Logo">
-    <img src="moon.png" alt="Moon Logo">
-</div>
-
-<table id="participants">
-    <thead>
-        <tr>
-            <th>الاسم</th>
-            <th>الجنس</th>
-            <th>الباقة</th>
-            <th>التحدي</th>
-        </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
-
-<script>
-let data = [
-    { "Name": "على محمد امام", "Gender": "male", "Package": "normal", "Challenge": "cycling(250)" },
-    { "Name": "Aalaa Ahmed", "Gender": "Female", "Package": "premium", "Challenge": "walking(50)" },
-    { "Name": "Abd El rhaman", "Gender": "male", "Package": "luxury", "Challenge": "cycling(250)" },
-    { "Name": "Abdallah fawzy arashed", "Gender": "male", "Package": "normal", "Challenge": "running(100)" },
-    // ضيف باقي الداتا هنا بنفس الشكل...
-];
-
-// ترتيب الداتا أبجدياً حسب الاسم
-data.sort((a, b) => a.Name.localeCompare(b.Name));
-
-// إضافة البيانات للجدول
-const tbody = document.querySelector("#participants tbody");
-data.forEach(p => {
-    let row = `<tr>
-        <td>${p.Name}</td>
-        <td>${p.Gender}</td>
-        <td>${p.Package}</td>
-        <td>${p.Challenge}</td>
-    </tr>`;
-    tbody.innerHTML += row;
-});
-</script>
-
-</body>
-</html>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Package</th>
+                <th>Challenge</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>على محمد امام</td>
+                <td>male</td>
+                <td>normal</td>
+                <td>cycling(250)</td>
+            </tr>
+            <tr>
+                <td>Aalaa Ahmed</td>
+                <td>Female</td>
+                <td>premium</td>
+                <td>walking(50)</td>
+            </tr>
+            <tr>
+                <td>Abd El rhaman</td>
+                <td>male</td>
+                <td>luxury</td>
+                <td>cycling(250)</td>
+            </tr>
+            <tr>
+                <td>Abdallah fawzy arashed</td>
+                <td>male</t
