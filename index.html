@@ -9,8 +9,8 @@
             font-family: 'Cairo', sans-serif;
             margin: 0;
             padding: 0;
-            background-image: url('background.jpg'); /* ضع هنا رابط الصورة الخلفية */
-            background-size: cover; /* تكبير الصورة لتملأ الشاشة */
+            background-image: url('background.jpg'); /* رابط الخلفية */
+            background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             color: #fff;
@@ -30,7 +30,7 @@
             width: 90%;
             margin: 20px auto;
             border-collapse: collapse;
-            background: rgba(0,0,0,0.3); /* شفافية خفيفة عشان تظهر الخلفية */
+            background: rgba(0,0,0,0.3); /* شفافية الجدول */
             color: #fff;
         }
 
@@ -51,11 +51,11 @@
 </head>
 <body>
     <div class="header">
-        <img src="team_logo.png" alt="Team Logo"> <!-- ضع هنا رابط اللوجو -->
-        <img src="moon.png" alt="Moon"> <!-- ضع هنا رابط القمر -->
+        <img src="team_logo.png" alt="Team Logo">
+        <img src="moon.png" alt="Moon">
     </div>
 
-    <table>
+    <table id="participantsTable">
         <thead>
             <tr>
                 <th>Name</th>
@@ -65,24 +65,36 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>على محمد امام</td>
-                <td>male</td>
-                <td>normal</td>
-                <td>cycling(250)</td>
-            </tr>
-            <tr>
-                <td>Aalaa Ahmed</td>
-                <td>Female</td>
-                <td>premium</td>
-                <td>walking(50)</td>
-            </tr>
-            <tr>
-                <td>Abd El rhaman</td>
-                <td>male</td>
-                <td>luxury</td>
-                <td>cycling(250)</td>
-            </tr>
-            <tr>
-                <td>Abdallah fawzy arashed</td>
-                <td>male</t
+            <!-- البيانات هتتحط هنا تلقائي -->
+        </tbody>
+    </table>
+
+    <script>
+        // اسم ملف JSON
+        const jsonFile = 'participants.json';
+
+        fetch(jsonFile)
+            .then(response => response.json())
+            .then(data => {
+                // ترتيب البيانات أبجدياً حسب الاسم
+                data.sort((a, b) => a.name.localeCompare(b.name, 'ar'));
+
+                const tableBody = document.querySelector('#participantsTable tbody');
+
+                data.forEach(person => {
+                    const row = document.createElement('tr');
+
+                    row.innerHTML = `
+                        <td>${person.name}</td>
+                        <td>${person.gender}</td>
+                        <td>${person.package}</td>
+                        <td>${person.challenge}</td>
+                    `;
+
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(err => console.error('Error loading JSON:', err));
+    </script>
+</body>
+</html>
