@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,9 +38,67 @@
         text-shadow: 2px 2px 5px #000;
     }
 
+    /* تنسيقات قسم الواتساب والبحث */
+    .top-section {
+        width: 90%;
+        margin: 10px auto 20px auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .whatsapp-banner {
+        background-color: rgba(37, 211, 102, 0.9); /* لون الواتساب */
+        color: #fff;
+        padding: 15px 20px;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 1.1rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        width: 100%;
+        max-width: 700px;
+        line-height: 1.6;
+    }
+
+    .whatsapp-banner a {
+        display: inline-block;
+        margin-top: 10px;
+        background-color: #fff;
+        color: #128C7E;
+        text-decoration: none;
+        padding: 8px 20px;
+        border-radius: 20px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .whatsapp-banner a:hover {
+        background-color: #f1f1f1;
+        transform: scale(1.05);
+    }
+
+    .search-container {
+        width: 100%;
+        max-width: 500px;
+    }
+
+    #searchInput {
+        width: 100%;
+        padding: 12px 15px;
+        border: none;
+        border-radius: 25px;
+        font-family: 'Cairo', sans-serif;
+        font-size: 1rem;
+        outline: none;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        box-sizing: border-box; /* علشان الـ padding مايبوظش العرض */
+    }
+
+    /* تنسيقات الجدول */
     table {
         width: 90%;
-        margin: 40px auto;
+        margin: 0 auto 40px auto;
         border-collapse: collapse;
         background-color: rgba(0,0,0,0.6);
         border-radius: 10px;
@@ -64,7 +122,7 @@
         background-color: rgba(255, 255, 255, 0.2);
     }
 
-    /* اجعل الجدول متجاوب */
+    /* متجاوب مع الموبايل */
     @media (max-width: 768px) {
         table, th, td {
             font-size: 0.9rem;
@@ -75,15 +133,31 @@
         header img {
             height: 60px;
         }
+        .whatsapp-banner {
+            font-size: 1rem;
+        }
     }
 </style>
 </head>
 <body>
+
 <header>
     <img src="moon.png" alt="Moon">
     <img src="logo.png" alt="Logo">
     <h1>قائمة المشاركين</h1>
 </header>
+
+<div class="top-section">
+    <div class="whatsapp-banner">
+        🚨 <strong>تنبيه هام:</strong> على جميع المشاركين الانضمام لجروب الواتساب الخاص بالايفنت، حيث سيتم متابعة كافة التفاصيل والتحديثات أولاً بأول!
+        <br>
+        <a href="https://chat.whatsapp.com/FKXpZdMUTop9A4l8gvPET4" target="_blank">💬 اضغط هنا للانضمام للجروب</a>
+    </div>
+    
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="🔍 ابحث عن مشارك بالاسم...">
+    </div>
+</div>
 
 <table id="participants">
     <thead>
@@ -95,8 +169,7 @@
         </tr>
     </thead>
     <tbody>
-        <!-- البيانات هتتحط هنا بواسطة جافاسكربت -->
-    </tbody>
+        </tbody>
 </table>
 
 <script>
@@ -106,7 +179,6 @@
     .then(data => {
         const tbody = document.querySelector('#participants tbody');
         data.forEach(item => {
-            // نتأكد ان الاسم مش فاضي
             if(item.Name && item.Gender) {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
@@ -120,6 +192,25 @@
         });
     })
     .catch(err => console.error('Error loading JSON:', err));
+
+    // برمجة شريط البحث (Live Search)
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+        // تحويل النص المكتوب لحروف صغيرة (لو البيانات فيها إنجليزي) لتسهيل البحث
+        let searchValue = this.value.toLowerCase(); 
+        let tableRows = document.querySelectorAll('#participants tbody tr');
+
+        tableRows.forEach(row => {
+            // بنجيب النص اللي جوه أول خلية (اللي هي عمود الاسم)
+            let nameCell = row.cells[0].textContent.toLowerCase();
+            
+            // لو الاسم بيحتوي على النص المكتوب في البحث، اعرض الصف، غير كده اخفيه
+            if (nameCell.includes(searchValue)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
 </script>
 </body>
 </html>
