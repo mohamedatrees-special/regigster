@@ -2,61 +2,65 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <title>Ramadan Challenge Participants</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet">
+    <title>Participants List</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap');
+
         body {
-            font-family: 'Cairo', sans-serif;
             margin: 0;
             padding: 0;
-            background-image: url('background.jpg'); /* ضع هنا رابط الخلفية */
+            font-family: 'Cairo', sans-serif;
+            background: url('bg.jpg') no-repeat center center fixed;
             background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
             color: #fff;
         }
 
-        .header {
+        header {
             text-align: center;
             padding: 20px;
         }
 
-        .header img {
+        header img {
             height: 80px;
             margin: 0 10px;
+        }
+
+        h1 {
+            margin: 10px 0;
+            font-size: 2em;
+            text-shadow: 2px 2px 4px #000;
         }
 
         table {
             width: 90%;
             margin: 20px auto;
             border-collapse: collapse;
-            background: rgba(0,0,0,0.3);
-            color: #fff;
+            background: rgba(0,0,0,0.6);
         }
 
         th, td {
-            padding: 12px;
-            border: 1px solid #fff;
+            padding: 10px;
             text-align: center;
+            border: 1px solid #fff;
         }
 
         th {
-            background: rgba(0,0,0,0.5);
+            background-color: rgba(255,255,255,0.2);
         }
 
-        tr:nth-child(even) {
-            background: rgba(0,0,0,0.2);
+        tbody tr:nth-child(even) {
+            background-color: rgba(255,255,255,0.1);
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <img src="team_logo.png" alt="Team Logo">
+    <header>
         <img src="moon.png" alt="Moon">
-        <h1>Ramadan Challenge Participants</h1>
-    </div>
+        <img src="logo.png" alt="Team Logo">
+        <h1>قائمة المشاركين</h1>
+    </header>
 
-    <table id="participantsTable">
+    <table id="participants-table">
         <thead>
             <tr>
                 <th>Name</th>
@@ -66,38 +70,29 @@
             </tr>
         </thead>
         <tbody>
-            <!-- البيانات هتتحط هنا تلقائي -->
+            <!-- البيانات هتتحمل هنا -->
         </tbody>
     </table>
 
     <script>
-        const jsonFile = 'participants.json'; // اسم ملف JSON عندك
-
-        fetch(jsonFile)
-            .then(response => response.json())
-            .then(data => {
-                // إزالة الصفوف الفارغة
-                const cleanData = data.filter(person => person.Name && person.Gender);
-
-                // ترتيب البيانات أبجدياً حسب الاسم
-                cleanData.sort((a, b) => a.Name.localeCompare(b.Name, 'ar'));
-
-                const tableBody = document.querySelector('#participantsTable tbody');
-
-                cleanData.forEach(person => {
-                    const row = document.createElement('tr');
-
-                    row.innerHTML = `
-                        <td>${person.Name}</td>
-                        <td>${person.Gender}</td>
-                        <td>${person.Package}</td>
-                        <td>${person.Challenge}</td>
+        fetch('data.json')
+        .then(response => response.json())
+        .then(data => {
+            const tbody = document.querySelector('#participants-table tbody');
+            data.forEach(item => {
+                if(item.Name){ // يتأكد من وجود اسم قبل الإضافة
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${item.Name}</td>
+                        <td>${item.Gender}</td>
+                        <td>${item.Package}</td>
+                        <td>${item.Challenge}</td>
                     `;
-
-                    tableBody.appendChild(row);
-                });
-            })
-            .catch(err => console.error('Error loading JSON:', err));
+                    tbody.appendChild(tr);
+                }
+            });
+        })
+        .catch(err => console.error('Error loading JSON:', err));
     </script>
 </body>
 </html>
