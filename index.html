@@ -1,98 +1,125 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <meta charset="UTF-8">
-    <title>Participants List</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>قائمة المشاركين</title>
+<style>
+    /* الخطوط */
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
 
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Cairo', sans-serif;
-            background: url('bg.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: #fff;
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Cairo', sans-serif;
+        background: url('bg.jpg') no-repeat center center fixed;
+        background-size: cover;
+        color: #fff;
+    }
+
+    header {
+        text-align: center;
+        padding: 20px 0;
+        position: relative;
+    }
+
+    header img {
+        height: 80px;
+        vertical-align: middle;
+        margin: 0 10px;
+    }
+
+    header h1 {
+        display: inline-block;
+        margin: 0;
+        vertical-align: middle;
+        font-size: 2rem;
+        color: #ffeb3b;
+        text-shadow: 2px 2px 5px #000;
+    }
+
+    table {
+        width: 90%;
+        margin: 40px auto;
+        border-collapse: collapse;
+        background-color: rgba(0,0,0,0.6);
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    th, td {
+        padding: 12px 15px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+        color: #fff;
+    }
+
+    th {
+        background-color: rgba(255, 235, 59, 0.9);
+        color: #000;
+        font-weight: bold;
+    }
+
+    tr:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* اجعل الجدول متجاوب */
+    @media (max-width: 768px) {
+        table, th, td {
+            font-size: 0.9rem;
         }
-
-        header {
-            text-align: center;
-            padding: 20px;
+        header h1 {
+            font-size: 1.5rem;
         }
-
         header img {
-            height: 80px;
-            margin: 0 10px;
+            height: 60px;
         }
-
-        h1 {
-            margin: 10px 0;
-            font-size: 2em;
-            text-shadow: 2px 2px 4px #000;
-        }
-
-        table {
-            width: 90%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            background: rgba(0,0,0,0.6);
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: center;
-            border: 1px solid #fff;
-        }
-
-        th {
-            background-color: rgba(255,255,255,0.2);
-        }
-
-        tbody tr:nth-child(even) {
-            background-color: rgba(255,255,255,0.1);
-        }
-    </style>
+    }
+</style>
 </head>
 <body>
-    <header>
-        <img src="moon.png" alt="Moon">
-        <img src="logo.png" alt="Team Logo">
-        <h1>قائمة المشاركين</h1>
-    </header>
+<header>
+    <img src="moon.png" alt="Moon">
+    <img src="logo.png" alt="Logo">
+    <h1>قائمة المشاركين</h1>
+</header>
 
-    <table id="participants-table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Gender</th>
-                <th>Package</th>
-                <th>Challenge</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- البيانات هتتحمل هنا -->
-        </tbody>
-    </table>
+<table id="participants">
+    <thead>
+        <tr>
+            <th>الاسم</th>
+            <th>الجنس</th>
+            <th>الباقة</th>
+            <th>التحدي</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- البيانات هتتحط هنا بواسطة جافاسكربت -->
+    </tbody>
+</table>
 
-    <script>
-        fetch('data.json')
-        .then(response => response.json())
-        .then(data => {
-            const tbody = document.querySelector('#participants-table tbody');
-            data.forEach(item => {
-                if(item.Name){ // يتأكد من وجود اسم قبل الإضافة
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td>${item.Name}</td>
-                        <td>${item.Gender}</td>
-                        <td>${item.Package}</td>
-                        <td>${item.Challenge}</td>
-                    `;
-                    tbody.appendChild(tr);
-                }
-            });
-        })
-        .catch(err => console.error('Error loading JSON:', err));
-    </script>
+<script>
+    // تحميل بيانات الجيسون
+    fetch('data.json')
+    .then(response => response.json())
+    .then(data => {
+        const tbody = document.querySelector('#participants tbody');
+        data.forEach(item => {
+            // نتأكد ان الاسم مش فاضي
+            if(item.Name && item.Gender) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${item.Name}</td>
+                    <td>${item.Gender}</td>
+                    <td>${item.Package}</td>
+                    <td>${item.Challenge}</td>
+                `;
+                tbody.appendChild(tr);
+            }
+        });
+    })
+    .catch(err => console.error('Error loading JSON:', err));
+</script>
 </body>
 </html>
