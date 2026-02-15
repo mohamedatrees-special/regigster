@@ -9,7 +9,7 @@
             font-family: 'Cairo', sans-serif;
             margin: 0;
             padding: 0;
-            background-image: url('background.jpg'); /* رابط الخلفية */
+            background-image: url('background.jpg'); /* ضع هنا رابط الخلفية */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -30,7 +30,7 @@
             width: 90%;
             margin: 20px auto;
             border-collapse: collapse;
-            background: rgba(0,0,0,0.3); /* شفافية الجدول */
+            background: rgba(0,0,0,0.3);
             color: #fff;
         }
 
@@ -53,6 +53,7 @@
     <div class="header">
         <img src="team_logo.png" alt="Team Logo">
         <img src="moon.png" alt="Moon">
+        <h1>Ramadan Challenge Participants</h1>
     </div>
 
     <table id="participantsTable">
@@ -70,25 +71,27 @@
     </table>
 
     <script>
-        // اسم ملف JSON
-        const jsonFile = 'participants.json';
+        const jsonFile = 'participants.json'; // اسم ملف JSON عندك
 
         fetch(jsonFile)
             .then(response => response.json())
             .then(data => {
+                // إزالة الصفوف الفارغة
+                const cleanData = data.filter(person => person.Name && person.Gender);
+
                 // ترتيب البيانات أبجدياً حسب الاسم
-                data.sort((a, b) => a.name.localeCompare(b.name, 'ar'));
+                cleanData.sort((a, b) => a.Name.localeCompare(b.Name, 'ar'));
 
                 const tableBody = document.querySelector('#participantsTable tbody');
 
-                data.forEach(person => {
+                cleanData.forEach(person => {
                     const row = document.createElement('tr');
 
                     row.innerHTML = `
-                        <td>${person.name}</td>
-                        <td>${person.gender}</td>
-                        <td>${person.package}</td>
-                        <td>${person.challenge}</td>
+                        <td>${person.Name}</td>
+                        <td>${person.Gender}</td>
+                        <td>${person.Package}</td>
+                        <td>${person.Challenge}</td>
                     `;
 
                     tableBody.appendChild(row);
